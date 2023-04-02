@@ -10,8 +10,8 @@ public class SquareCentricBoard implements Board {
     }
 
     private int[][] board;
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
 
     @Override
     public List<MoveTurple> getNeighbors() {
@@ -23,11 +23,16 @@ public class SquareCentricBoard implements Board {
         if (board[rows - 1][columns - 1] != 0) {
             return false;
         }
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < rows-1; i++) {
             for (int j = 0; j < columns; j++) {
                 if (board[i][j] != i * columns + j + 1) {
                     return false;
                 }
+            }
+        }
+        for (int i = 0; i < columns-1; i++) {
+            if (board[rows-1][i] != (rows-1) * columns + i + 1) {
+                return false;
             }
         }
         return true;

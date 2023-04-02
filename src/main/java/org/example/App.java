@@ -1,21 +1,17 @@
 package org.example;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number: ");
-        int num = sc.nextInt();
-        System.out.println("The number is: " + num);
-        sc.close();
+public class App {
+    public static void main(String[] args) throws FileNotFoundException {
+        System.out.println("Hello World!");
+        SquareCentricBoard board = Dao.readInitialState("input.txt");
+        System.out.println(board.isGoal());
+
 
     }
 }
