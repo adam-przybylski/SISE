@@ -12,6 +12,8 @@ public class App {
         SquareCentricBoard board = Dao.readInitialState("input.txt");
         System.out.println(board.isGoal());
 
+        MoveTurple result = BFS.solve(board);
+        System.out.println(BFS.solve(board));
 
     }
 }
