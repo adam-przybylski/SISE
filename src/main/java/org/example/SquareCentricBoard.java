@@ -3,7 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SquareCentricBoard implements Board {
+public class SquareCentricBoard implements Board, Cloneable {
     public SquareCentricBoard(int[][] board) {
         this.board = board;
         this.rows = board.length;
@@ -14,17 +14,23 @@ public class SquareCentricBoard implements Board {
     private final int rows;
     private final int columns;
 
+    public int[][] getBoard() {
+        return board;
+    }
+
     @Override
     public List<MoveTurple> getNeighbors() {
         List<MoveTurple> result = new ArrayList<>();
 
         for(Move move : Move.values()) {
             try {
-                SquareCentricBoard newBoard = new SquareCentricBoard(board);
+                SquareCentricBoard newBoard = (SquareCentricBoard)this.clone();
                 newBoard.move(move);
                 result.add(new MoveTurple(newBoard, move));
             } catch (WrongMoveException e) {
                 // do nothing
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
             }
         }
         return result;
@@ -93,5 +99,16 @@ public class SquareCentricBoard implements Board {
             }
         }
 
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        int[][] newBoard = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                newBoard[i][j] = board[i][j];
+            }
+        }
+        return new SquareCentricBoard(newBoard);
     }
 }
