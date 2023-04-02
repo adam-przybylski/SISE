@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SquareCentricBoard implements Board, Cloneable {
@@ -101,6 +102,9 @@ public class SquareCentricBoard implements Board, Cloneable {
 
     }
 
+
+
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         int[][] newBoard = new int[rows][columns];
@@ -110,5 +114,10 @@ public class SquareCentricBoard implements Board, Cloneable {
             }
         }
         return new SquareCentricBoard(newBoard);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return Arrays.deepEquals(board, ((SquareCentricBoard) obj).board);
     }
 }

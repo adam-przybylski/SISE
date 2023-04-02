@@ -30,11 +30,22 @@ public class SquareCentricBoardTest {
 
     @Test
     public void isGoalTest() {
-
+        int[][] testArray = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+        SquareCentricBoard board = new SquareCentricBoard(testArray);
+        Assertions.assertTrue(board.isGoal());
     }
 
     @Test
     public void moveTest() {
-
+        int[][] testArray = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+        SquareCentricBoard board = new SquareCentricBoard(testArray);
+        int[][] testArray2 = new int[][]{{1, 2, 3}, {4, 5, 0}, {7, 8, 6}};
+        SquareCentricBoard board2 = new SquareCentricBoard(testArray2);
+        try {
+            board.move(Board.Move.UP);
+        } catch (WrongMoveException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(board,board2);
     }
 }

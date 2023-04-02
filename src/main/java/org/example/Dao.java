@@ -24,7 +24,7 @@ public class Dao {
         return new SquareCentricBoard(board);
     }
 
-    public static void writeSolution(String filename, int numOfMoves, String moves)
+    public static void writeSolution(String filename, String numOfMoves, String moves)
             throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         writer.write(numOfMoves);
