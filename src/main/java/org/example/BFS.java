@@ -7,6 +7,8 @@ public class BFS {
     public static int MAX_DEPTH = 100;
     private static ArrayDeque<Board> open = new ArrayDeque<>();
     private static HashMap<Board, MoveTurple> closed = new HashMap<>();
+
+    private static HashMap<Board, MoveTurple> traversalGraph = new HashMap<>();
     private static int depth = 0;
     public static MoveTurple solve(Board board) {
         open.add(board);
