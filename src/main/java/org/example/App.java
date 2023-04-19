@@ -1,19 +1,22 @@
 package org.example;
 
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.List;
 
 /**
  * Hello world!
  */
 public class App {
     public static void main(String[] args) throws FileNotFoundException {
-        System.out.println("Hello World!");
         SquareCentricBoard board = Dao.readInitialState("input.txt");
         System.out.println(board.isGoal());
 
-        MoveTurple result = BFS.solve(board);
-        System.out.println(BFS.solve(board));
-
+        try {
+            List<Board.Move> result = BFS.solve(board);
+            System.out.println(result);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

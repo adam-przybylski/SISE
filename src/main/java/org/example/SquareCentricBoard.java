@@ -20,14 +20,14 @@ public class SquareCentricBoard implements Board, Cloneable {
     }
 
     @Override
-    public List<MoveTurple> getNeighbors() {
-        List<MoveTurple> result = new ArrayList<>();
+    public List<MoveTuple> getNeighbors() {
+        List<MoveTuple> result = new ArrayList<>();
 
         for(Move move : Move.values()) {
             try {
                 SquareCentricBoard newBoard = (SquareCentricBoard)this.clone();
                 newBoard.move(move);
-                result.add(new MoveTurple(newBoard, move));
+                result.add(new MoveTuple(newBoard, move));
             } catch (WrongMoveException e) {
                 // do nothing
             } catch (CloneNotSupportedException e) {

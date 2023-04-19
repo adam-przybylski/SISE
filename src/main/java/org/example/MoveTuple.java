@@ -1,10 +1,10 @@
 package org.example;
 
-public class MoveTurple {
+public class MoveTuple {
     public final Board board;
     public final Board.Move move;
 
-    public MoveTurple(Board board, Board.Move move) {
+    public MoveTuple(Board board, Board.Move move) {
         this.board = board;
         this.move = move;
     }
