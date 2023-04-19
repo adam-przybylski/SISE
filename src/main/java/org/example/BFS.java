@@ -3,17 +3,17 @@ package org.example;
 import java.util.*;
 
 public class BFS {
-    public static int MAX_DEPTH = 100;
-    private static ArrayDeque<Board> open = new ArrayDeque<>();
-    private static HashSet<Board> closed = new HashSet<>();
+    public static int MAX_DEPTH = 10000;
+    private static final ArrayDeque<Board> open = new ArrayDeque<>();
+    private static final HashSet<Board> closed = new HashSet<>();
 
     //  In value, we keep move that led to this board
-    private static HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
+    private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
     private static int depth = 0;
     // TODO: return path
     public static List<Board.Move> solve(Board board) throws WrongMoveException {
         open.add(board);
-        traversalGraph.put(board, null);
+        //traversalGraph.put(board, null);
         while (!open.isEmpty()) {
             Board current = open.poll();
             if (current.isGoal()) {
@@ -37,9 +37,9 @@ public class BFS {
             }
             // TODO: fix depth
             depth++;
-            if (depth > MAX_DEPTH) {
-                return null;
-            }
+//            if (depth > MAX_DEPTH) {
+//                return null;
+//            }
         }
         return null;
     }

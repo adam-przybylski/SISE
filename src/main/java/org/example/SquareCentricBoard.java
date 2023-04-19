@@ -120,4 +120,8 @@ public class SquareCentricBoard implements Board, Cloneable {
     public boolean equals(Object obj) {
         return Arrays.deepEquals(board, ((SquareCentricBoard) obj).board);
     }
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(board);
+    }
 }
