@@ -24,6 +24,7 @@ public class BFS {
                     result.add(lastMove);
                     current.move(lastMove.opposite());
                 }
+                Collections.reverse(result);
                 return result;
             }
             closed.add(current);
