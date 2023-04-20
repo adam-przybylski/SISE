@@ -12,7 +12,7 @@ public class App {
         System.out.println(board.isGoal());
 
         try {
-            List<Board.Move> result = BFS.solve(board);
+            List<Board.Move> result = DFS.solve(board);
             System.out.println(result);
         }
         catch (Exception e) {
