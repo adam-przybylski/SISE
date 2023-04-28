@@ -11,9 +11,9 @@ public class SquareCentricBoard implements Board, Cloneable {
         this.columns = board[0].length;
     }
 
-    private int[][] board;
-    private final int rows;
-    private final int columns;
+    protected int[][] board;
+    protected final int rows;
+    protected final int columns;
 
     public int[][] getBoard() {
         return board;
