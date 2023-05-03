@@ -8,4 +8,8 @@ public class MoveTuple {
         this.board = board;
         this.move = move;
     }
+    @Override
+    public int hashCode() {
+        return board.hashCode();
+    }
 }

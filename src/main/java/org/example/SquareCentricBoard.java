@@ -124,4 +124,15 @@ public class SquareCentricBoard implements Board, Cloneable {
     public int hashCode() {
         return Arrays.deepHashCode(board);
     }
+    @Override
+    public int[] getState() {
+        int[] result = new int[rows * columns];
+        int k = 0;
+        for (int[] row : board) {
+            for (int cell : row) {
+                result[k++] = cell;
+            }
+        }
+        return result;
+    }
 }

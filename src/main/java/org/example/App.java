@@ -12,8 +12,10 @@ public class App {
         System.out.println(board.isGoal());
 
         try {
-            List<Board.Move> result = DFS.solve(board);
+            List<Board.Move> result = AStar.solveManhattan(board);
             System.out.println(result);
+            List<Board.Move> result2 = BFS.solve(board);
+            System.out.println(result2);
         }
         catch (Exception e) {
             System.out.println(e);

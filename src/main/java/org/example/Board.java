@@ -37,4 +37,6 @@ public interface Board {
     public boolean isGoal();
 
     public void move(Move move) throws WrongMoveException;
+
+    public int[] getState();
 }
