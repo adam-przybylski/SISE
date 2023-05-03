@@ -8,14 +8,18 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) throws FileNotFoundException {
-        SquareCentricBoard board = Dao.readInitialState("input.txt");
+        SquareCentricBoard board = Dao.readInitialState("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\dodatkowe-uklady\\4x4_13_10839.txt");
         System.out.println(board.isGoal());
 
         try {
             List<Board.Move> result = AStar.solveManhattan(board);
-            System.out.println(result);
+            System.out.println("1: " + result);
             List<Board.Move> result2 = BFS.solve(board);
-            System.out.println(result2);
+            System.out.println("2: " + result2);
+            List<Board.Move> result3 = DFS.solve(board);
+            System.out.println("3: " + result3);
+            List<Board.Move> result4 = AStar.solveHamming(board);
+            System.out.println("4: " + result4);
         }
         catch (Exception e) {
             System.out.println(e);

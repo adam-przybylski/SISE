@@ -37,7 +37,7 @@ public class AStar {
                         traversalGraph.put(neighbor.board, new LastMoveScoreTuple(neighbor.move, neighborWithScore.score));
                     }
                 }
-            } else if (closed.contains(current)) {
+            } else if (traversalGraph.get(current) != null) {
                 if (traversalGraph.get(current).score > curr.depth + 1 + heuristic.apply(current)) {
                     traversalGraph.put(current, new LastMoveScoreTuple(traversalGraph.get(current).lastMove, curr.depth + 1 + heuristic.apply(current)));
                 }

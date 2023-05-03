@@ -36,7 +36,7 @@ public class DFS {
             if (curr.depth < MAX_DEPTH && !closed.contains(current)) {
                 closed.add(current);
                 for (MoveTuple neighbor : current.getNeighbors()) {
-                    if (!closed.contains(neighbor.board)) {
+                    if (!closed.contains(neighbor.board) && curr.depth < MAX_DEPTH) {
                         BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                         open.push(neighborWithDepth);
                         traversalGraph.put(neighbor.board, neighbor.move);
