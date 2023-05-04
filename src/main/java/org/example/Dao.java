@@ -32,4 +32,11 @@ public class Dao {
         writer.write(moves);
         writer.close();
     }
+
+    public static void writeSolution(String filename, String numOfMoves)
+            throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        writer.write(numOfMoves);
+        writer.close();
+    }
 }

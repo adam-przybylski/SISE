@@ -49,25 +49,31 @@ public class App {
         } catch (Exception e) {
             System.out.println(e);
         }
-        int resultLength = solution.size();
-        StringBuilder result = new StringBuilder();
-        for (Board.Move move : solution) {
-            switch (move) {
-                case UP:
-                    result.append("U");
-                    break;
-                case DOWN:
-                    result.append("D");
-                    break;
-                case LEFT:
-                    result.append("L");
-                    break;
-                case RIGHT:
-                    result.append("R");
-                    break;
+
+        if (solution != null) {
+            int resultLength = solution.size();
+            StringBuilder result = new StringBuilder();
+            for (Board.Move move : solution) {
+                switch (move) {
+                    case UP:
+                        result.append("U");
+                        break;
+                    case DOWN:
+                        result.append("D");
+                        break;
+                    case LEFT:
+                        result.append("L");
+                        break;
+                    case RIGHT:
+                        result.append("R");
+                        break;
+                }
             }
+            Dao.writeSolution(jarPath + "\\" + outputSolution, String.valueOf(resultLength),
+                    result.toString());
+        } else {
+            Dao.writeSolution(jarPath + "\\" + outputSolution, String.valueOf(-1));
         }
-        Dao.writeSolution(jarPath + "\\" + outputSolution, String.valueOf(resultLength),
-                result.toString());
+
     }
 }
