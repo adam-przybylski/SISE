@@ -1,14 +1,22 @@
 package org.example;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
  * Hello world!
  */
 public class App {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        File file = new File(App.class
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .toURI()
+                .getPath());
+        String jarPath = file.getParent();
 
         String strategy = args[0];
         String version = args[1];
@@ -16,7 +24,7 @@ public class App {
         String outputSolution = args[3];
         String outputStats = args[4];
 
-        SquareCentricBoard board = Dao.readInitialState("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\zad1\\ukladanki\\" + path);
+        SquareCentricBoard board = Dao.readInitialState(jarPath + "\\" + path);
         List<Board.Move> solution = null;
         try {
             switch (strategy) {
@@ -29,10 +37,9 @@ public class App {
                     solution = DFS.solve(board, version);
                     break;
                 case "astr":
-                    if(version.equals("manh")) {
+                    if (version.equals("manh")) {
                         solution = AStar.solveManhattan(board);
-                    }
-                    else if(version.equals("hamm")) {
+                    } else if (version.equals("hamm")) {
                         solution = AStar.solveHamming(board);
                     }
                     break;
@@ -60,6 +67,7 @@ public class App {
                     break;
             }
         }
-        Dao.writeSolution("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\zad1\\ukladanki\\" + outputSolution , String.valueOf(resultLength), result.toString());
+        Dao.writeSolution(jarPath + "\\" + outputSolution, String.valueOf(resultLength),
+                result.toString());
     }
 }
