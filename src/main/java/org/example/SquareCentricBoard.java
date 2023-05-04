@@ -5,15 +5,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SquareCentricBoard implements Board, Cloneable {
+    public SquareCentricBoard(int[][] board, String order) {
+        this.board = board;
+        this.rows = board.length;
+        this.columns = board[0].length;
+        this.order = order;
+    }
     public SquareCentricBoard(int[][] board) {
         this.board = board;
         this.rows = board.length;
         this.columns = board[0].length;
+        this.order = "UDLR";
     }
 
     protected int[][] board;
     protected final int rows;
     protected final int columns;
+    protected String order;
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public int[][] getBoard() {
         return board;
@@ -23,7 +35,7 @@ public class SquareCentricBoard implements Board, Cloneable {
     public List<MoveTuple> getNeighbors() {
         List<MoveTuple> result = new ArrayList<>();
 
-        for(Move move : Move.values()) {
+        for(Move move : Move.getInOrder(order)) {
             try {
                 SquareCentricBoard newBoard = (SquareCentricBoard)this.clone();
                 newBoard.move(move);
@@ -113,7 +125,7 @@ public class SquareCentricBoard implements Board, Cloneable {
                 newBoard[i][j] = board[i][j];
             }
         }
-        return new SquareCentricBoard(newBoard);
+        return new SquareCentricBoard(newBoard, order);
     }
 
     @Override

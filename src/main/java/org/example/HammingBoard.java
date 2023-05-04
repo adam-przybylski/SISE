@@ -1,8 +1,8 @@
 package org.example;
 
 public class HammingBoard extends SquareCentricBoard{
-    public HammingBoard(int[][] board) {
-        super(board);
+    public HammingBoard(int[][] board, String order) {
+        super(board, order);
     }
     public int getHeuristic() {
         int result = 0;

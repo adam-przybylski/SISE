@@ -8,7 +8,7 @@ public class SquareCentricBoardTest {
     @Test
     public void constructorTest() {
         int[][] testArray = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
-        SquareCentricBoard board = new SquareCentricBoard(testArray);
+        SquareCentricBoard board = new SquareCentricBoard(testArray, "");
         Assertions.assertEquals(testArray, board.getBoard());
     }
 

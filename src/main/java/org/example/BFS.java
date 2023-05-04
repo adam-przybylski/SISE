@@ -11,7 +11,7 @@ public class BFS {
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
     private static int depth = 0;
     // TODO: return path
-    public static List<Board.Move> solve(Board board) throws WrongMoveException {
+    public static List<Board.Move> solve(Board board, String order) throws WrongMoveException {
         open.add(board);
         //traversalGraph.put(board, null);
         while (!open.isEmpty()) {

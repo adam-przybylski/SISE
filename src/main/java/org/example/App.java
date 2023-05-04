@@ -1,28 +1,65 @@
 package org.example;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
  * Hello world!
  */
 public class App {
-    public static void main(String[] args) throws FileNotFoundException {
-        SquareCentricBoard board = Dao.readInitialState("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\dodatkowe-uklady\\4x4_13_10839.txt");
-        System.out.println(board.isGoal());
+    public static void main(String[] args) throws IOException {
 
+        String strategy = args[0];
+        String version = args[1];
+        String path = args[2];
+        String outputSolution = args[3];
+        String outputStats = args[4];
+
+        SquareCentricBoard board = Dao.readInitialState("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\zad1\\ukladanki\\" + path);
+        List<Board.Move> solution = null;
         try {
-            List<Board.Move> result = AStar.solveManhattan(board);
-            System.out.println("1: " + result);
-            List<Board.Move> result2 = BFS.solve(board);
-            System.out.println("2: " + result2);
-            List<Board.Move> result3 = DFS.solve(board);
-            System.out.println("3: " + result3);
-            List<Board.Move> result4 = AStar.solveHamming(board);
-            System.out.println("4: " + result4);
-        }
-        catch (Exception e) {
+            switch (strategy) {
+                case "bfs":
+                    board.setOrder(version);
+                    solution = BFS.solve(board, version);
+                    break;
+                case "dfs":
+                    board.setOrder(version);
+                    solution = DFS.solve(board, version);
+                    break;
+                case "astr":
+                    if(version.equals("manh")) {
+                        solution = AStar.solveManhattan(board);
+                    }
+                    else if(version.equals("hamm")) {
+                        solution = AStar.solveHamming(board);
+                    }
+                    break;
+                default:
+                    System.out.println("Wrong strategy");
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
+        int resultLength = solution.size();
+        StringBuilder result = new StringBuilder();
+        for (Board.Move move : solution) {
+            switch (move) {
+                case UP:
+                    result.append("U");
+                    break;
+                case DOWN:
+                    result.append("D");
+                    break;
+                case LEFT:
+                    result.append("L");
+                    break;
+                case RIGHT:
+                    result.append("R");
+                    break;
+            }
+        }
+        Dao.writeSolution("C:\\Users\\jpazio\\Desktop\\SEMESTR4\\Sztuczna\\zad1\\ukladanki\\" + outputSolution , String.valueOf(resultLength), result.toString());
     }
 }

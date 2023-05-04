@@ -21,7 +21,7 @@ public class Dao {
             }
         }
         sc.close();
-        return new SquareCentricBoard(board);
+        return new SquareCentricBoard(board, "");
     }
 
     public static void writeSolution(String filename, String numOfMoves, String moves)

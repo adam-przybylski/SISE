@@ -13,11 +13,11 @@ class BoardWithDepth {
     }
 }
 public class DFS {
-    public static int MAX_DEPTH = 20;
+    public static int MAX_DEPTH = 25;
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
     private static final HashSet<Board> closed = new HashSet<>();
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
-    public static List<Board.Move> solve(Board board) throws WrongMoveException {
+    public static List<Board.Move> solve(Board board, String order) throws WrongMoveException {
         BoardWithDepth boardWithDepth = new BoardWithDepth(board, 0);
         open.add(boardWithDepth);
         while (!open.isEmpty()) {

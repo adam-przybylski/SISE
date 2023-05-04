@@ -30,6 +30,18 @@ public interface Board {
         };
 
         abstract public Move opposite();
+        public static Move[] getInOrder(String order) {
+            Move[] orderMoves = new Move[order.length()];
+            for (int i = 0; i < order.length(); i++) {
+                switch (order.charAt(i)) {
+                    case 'U' -> orderMoves[i] = UP;
+                    case 'D' -> orderMoves[i] = DOWN;
+                    case 'L' -> orderMoves[i] = LEFT;
+                    case 'R' -> orderMoves[i] = RIGHT;
+                }
+            }
+            return orderMoves;
+        }
     }
 
     public List<MoveTuple> getNeighbors();
