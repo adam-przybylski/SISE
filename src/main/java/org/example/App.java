@@ -38,8 +38,10 @@ public class App {
                     break;
                 case "astr":
                     if (version.equals("manh")) {
+                        board.setOrder("UDLR");
                         solution = AStar.solveManhattan(board);
                     } else if (version.equals("hamm")) {
+                        board.setOrder("UDLR");
                         solution = AStar.solveHamming(board);
                     }
                     break;

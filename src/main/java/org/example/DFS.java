@@ -13,7 +13,7 @@ class BoardWithDepth {
     }
 }
 public class DFS {
-    public static int MAX_DEPTH = 25;
+    public static int MAX_DEPTH = 20;
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
     private static final HashSet<Board> closed = new HashSet<>();
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
