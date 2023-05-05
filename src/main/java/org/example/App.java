@@ -25,12 +25,12 @@ public class App {
         String outputStats = args[4];
 
         SquareCentricBoard board = Dao.readInitialState(jarPath + "\\" + path);
-        List<Board.Move> solution = null;
+        Statistics solution = null;
         try {
             switch (strategy) {
                 case "bfs":
                     board.setOrder(version);
-                    solution = BFS.solve(board, version);
+                    //solution = BFS.solve(board, version);
                     break;
                 case "dfs":
                     board.setOrder(version);
@@ -39,10 +39,10 @@ public class App {
                 case "astr":
                     if (version.equals("manh")) {
                         board.setOrder("UDLR");
-                        solution = AStar.solveManhattan(board);
+                        //solution = AStar.solveManhattan(board);
                     } else if (version.equals("hamm")) {
                         board.setOrder("UDLR");
-                        solution = AStar.solveHamming(board);
+                        //solution = AStar.solveHamming(board);
                     }
                     break;
                 default:
@@ -53,9 +53,9 @@ public class App {
         }
 
         if (solution != null) {
-            int resultLength = solution.size();
+            int resultLength = solution.getResultLength();
             StringBuilder result = new StringBuilder();
-            for (Board.Move move : solution) {
+            for (Board.Move move : solution.getMoves()) {
                 switch (move) {
                     case UP:
                         result.append("U");

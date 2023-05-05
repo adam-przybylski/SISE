@@ -17,25 +17,36 @@ public class DFS {
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
     private static final HashSet<Board> closed = new HashSet<>();
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
-    public static List<Board.Move> solve(Board board, String order) throws WrongMoveException {
+    public static Statistics solve(Board board, String order) throws WrongMoveException {
+        long startTime = System.currentTimeMillis();
+        int maxDepth = 0;
+        int nodesVisited = 0;
+        int nodesProcessed = 0;
         BoardWithDepth boardWithDepth = new BoardWithDepth(board, 0);
         open.add(boardWithDepth);
         while (!open.isEmpty()) {
             BoardWithDepth curr =open.poll();
+            nodesVisited++;
             Board current = curr.board;
+            if(curr.depth > maxDepth) {
+                maxDepth = curr.depth;
+            }
             if (current.isGoal()) {
-                List<Board.Move> result = new ArrayList<>();
+                ArrayList<Board.Move> result = new ArrayList<>();
                 while (!current.equals(board)) {
                     Board.Move lastMove = traversalGraph.get(current);
                     result.add(lastMove);
                     current.move(lastMove.opposite());
                 }
                 Collections.reverse(result);
-                return result;
+                long endTime = System.currentTimeMillis();
+                long timeElapsed = endTime - startTime;
+                return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }
             if (curr.depth < MAX_DEPTH && !closed.contains(current)) {
                 closed.add(current);
                 for (MoveTuple neighbor : current.getNeighbors()) {
+                    nodesProcessed++;
                     if (!closed.contains(neighbor.board) && curr.depth < MAX_DEPTH) {
                         BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                         open.push(neighborWithDepth);
