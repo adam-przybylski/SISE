@@ -23,7 +23,7 @@ class BoardWithDepth {
 public class DFS {
     public static int MAX_DEPTH = 20;
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
-    private static final HashSet<Board> closed = new HashSet<>();
+    private static final HashSet<BoardWithDepth> closed = new HashSet<>();
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
     public static Statistics solve(Board board, String order) throws WrongMoveException {
         long startTime = System.nanoTime();
@@ -51,12 +51,12 @@ public class DFS {
                 long timeElapsed = endTime - startTime;
                 return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }
-            if (curr.depth < MAX_DEPTH && !closed.contains(current)) {
-                closed.add(current);
+            if (curr.depth < MAX_DEPTH && !closed.contains(curr)) {
+                closed.add(curr);
                 for (MoveTuple neighbor : current.getNeighbors()) {
+                    BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                     nodesProcessed++;
-                    if (!closed.contains(neighbor.board) && curr.depth < MAX_DEPTH) {
-                        BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
+                    if (!closed.contains(neighborWithDepth) && curr.depth < MAX_DEPTH) {
                         open.push(neighborWithDepth);
                         traversalGraph.put(neighbor.board, neighbor.move);
                     }
