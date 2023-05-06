@@ -8,25 +8,33 @@ public class AStar {
     private static final HashSet<Board> closed = new HashSet<>();
     private static final HashMap<Board, LastMoveScoreTuple> traversalGraph = new HashMap<>();
 
-    public static List<Board.Move> solve(Board board, Function<Board, Integer> heuristic) throws WrongMoveException {
+    public static Statistics solve(Board board, Function<Board, Integer> heuristic) throws WrongMoveException {
+        long startTime = System.currentTimeMillis();
+        int maxDepth = 0;
+        int nodesVisited = 0;
+        int nodesProcessed = 0;
         BoardWithScore boardWithScore = new BoardWithScore(board, 0, heuristic.apply(board));
         open.add(boardWithScore);
         while (!open.isEmpty()) {
             BoardWithScore curr = open.poll();
             Board current = curr.board;
+            nodesVisited++;
             if (current.isGoal()) {
-                List<Board.Move> result = new ArrayList<>();
+                ArrayList<Board.Move> result = new ArrayList<>();
                 while (!current.equals(board)) {
                     Board.Move lastMove = traversalGraph.get(current).lastMove;
                     result.add(lastMove);
                     current.move(lastMove.opposite());
                 }
                 Collections.reverse(result);
-                return result;
+                long endTime = System.currentTimeMillis();
+                long timeElapsed = endTime - startTime;
+                return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }
             if (!closed.contains(current)) {
                 closed.add(current);
                 for (MoveTuple neighbor : current.getNeighbors()) {
+                    nodesProcessed++;
                     if (!closed.contains(neighbor.board)) {
                         BoardWithScore neighborWithScore = new BoardWithScore(
                                 neighbor.board,
@@ -46,10 +54,10 @@ public class AStar {
         return null;
     }
 
-    public static List<Board.Move> solveHamming(Board board) throws WrongMoveException {
+    public static Statistics solveHamming(Board board) throws WrongMoveException {
         return solve(board, new HammingHeuristic());
     }
-    public static List<Board.Move> solveManhattan(Board board) throws WrongMoveException {
+    public static Statistics solveManhattan(Board board) throws WrongMoveException {
         return solve(board, new ManhattanHHeuristic());
     }
 }

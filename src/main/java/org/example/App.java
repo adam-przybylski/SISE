@@ -30,7 +30,7 @@ public class App {
             switch (strategy) {
                 case "bfs":
                     board.setOrder(version);
-                    //solution = BFS.solve(board, version);
+                    solution = BFS.solve(board, version);
                     break;
                 case "dfs":
                     board.setOrder(version);
@@ -39,10 +39,10 @@ public class App {
                 case "astr":
                     if (version.equals("manh")) {
                         board.setOrder("UDLR");
-                        //solution = AStar.solveManhattan(board);
+                        solution = AStar.solveManhattan(board);
                     } else if (version.equals("hamm")) {
                         board.setOrder("UDLR");
-                        //solution = AStar.solveHamming(board);
+                        solution = AStar.solveHamming(board);
                     }
                     break;
                 default:
