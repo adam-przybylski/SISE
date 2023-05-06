@@ -9,7 +9,7 @@ public class AStar {
     private static final HashMap<Board, LastMoveScoreTuple> traversalGraph = new HashMap<>();
 
     public static Statistics solve(Board board, Function<Board, Integer> heuristic) throws WrongMoveException {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         int maxDepth = 0;
         int nodesVisited = 0;
         int nodesProcessed = 0;
@@ -18,6 +18,9 @@ public class AStar {
         while (!open.isEmpty()) {
             BoardWithScore curr = open.poll();
             Board current = curr.board;
+            if(curr.depth > maxDepth) {
+                maxDepth = curr.depth;
+            }
             nodesVisited++;
             if (current.isGoal()) {
                 ArrayList<Board.Move> result = new ArrayList<>();
@@ -27,7 +30,7 @@ public class AStar {
                     current.move(lastMove.opposite());
                 }
                 Collections.reverse(result);
-                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
                 return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Dao {
@@ -37,6 +38,20 @@ public class Dao {
             throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
         writer.write(numOfMoves);
+        writer.close();
+    }
+    public static void writeStat(String filename, Statistics statistics) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        writer.write(String.valueOf(statistics.getResultLength()));
+        writer.newLine();
+        writer.write(String.valueOf(statistics.getNodesVisited()));
+        writer.newLine();
+        writer.write(String.valueOf(statistics.getNodesProcessed()));
+        writer.newLine();
+        writer.write(String.valueOf(statistics.getMaxDepth()));
+        writer.newLine();
+        String time = new DecimalFormat("#.###").format(statistics.getTimeElapsed() / 1_000_000.0);
+        writer.write(time);
         writer.close();
     }
 }

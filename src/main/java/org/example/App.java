@@ -76,6 +76,6 @@ public class App {
         } else {
             Dao.writeSolution(jarPath + "\\" + outputSolution, String.valueOf(-1));
         }
-
+        Dao.writeStat(jarPath + "\\" + outputStats, solution);
     }
 }

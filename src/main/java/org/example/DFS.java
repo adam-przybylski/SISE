@@ -18,7 +18,7 @@ public class DFS {
     private static final HashSet<Board> closed = new HashSet<>();
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
     public static Statistics solve(Board board, String order) throws WrongMoveException {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         int maxDepth = 0;
         int nodesVisited = 0;
         int nodesProcessed = 0;
@@ -39,7 +39,7 @@ public class DFS {
                     current.move(lastMove.opposite());
                 }
                 Collections.reverse(result);
-                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
                 return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }
