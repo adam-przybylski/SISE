@@ -52,7 +52,7 @@ public class App {
             System.out.println(e);
         }
 
-        if (solution != null) {
+        if (solution.getMoves() != null) {
             int resultLength = solution.getResultLength();
             StringBuilder result = new StringBuilder();
             for (Board.Move move : solution.getMoves()) {

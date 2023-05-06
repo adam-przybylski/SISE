@@ -54,7 +54,9 @@ public class AStar {
                 }
             }
         }
-        return null;
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        return new Statistics(-1, nodesVisited, nodesProcessed, maxDepth, timeElapsed, null);
     }
 
     public static Statistics solveHamming(Board board) throws WrongMoveException {
