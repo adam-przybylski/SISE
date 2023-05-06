@@ -5,7 +5,7 @@ import java.util.*;
 public class BFS {
     public static int MAX_DEPTH = 10000;
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
-    private static final HashSet<Board> closed = new HashSet<>();
+    private static final HashSet<BoardWithDepth> closed = new HashSet<>();
 
     //  In value, we keep move that led to this board
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
@@ -29,8 +29,8 @@ public class BFS {
             if (current.board.isGoal()) {
                 // TODO: return path
                 ArrayList<Board.Move> result = new ArrayList<>();
-                while (!current.equals(board)) {
-                    Board.Move lastMove = traversalGraph.get(current);
+                while (!current.board.equals(board)) {
+                    Board.Move lastMove = traversalGraph.get(current.board);
                     result.add(lastMove);
                     current.board.move(lastMove.opposite());
                 }
@@ -39,11 +39,11 @@ public class BFS {
                 long timeElapsed = endTime - startTime;
                 return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
             }
-            closed.add(current.board);
+            closed.add(current);
             for (MoveTuple neighbor : current.board.getNeighbors()) {
                 nodesProcessed++;
-                if (!closed.contains(neighbor.board) && !open.contains(neighbor.board)) {
-                    BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, depth + 1);
+                BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, depth + 1);
+                if (!closed.contains(neighborWithDepth) && !open.contains(neighborWithDepth)) {
                     open.add(neighborWithDepth);
                     // May be to change how we got here, I think it's ok nvm
                     traversalGraph.put(neighbor.board, neighbor.move);

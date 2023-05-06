@@ -11,6 +11,14 @@ class BoardWithDepth {
     public int hashCode() {
         return board.hashCode();
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BoardWithDepth) {
+            BoardWithDepth other = (BoardWithDepth) obj;
+            return board.equals(other.board);
+        }
+        return false;
+    }
 }
 public class DFS {
     public static int MAX_DEPTH = 20;
