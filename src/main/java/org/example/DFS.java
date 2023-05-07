@@ -57,6 +57,18 @@ public class DFS {
                     BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                     nodesProcessed++;
                     if (!closed.contains(neighborWithDepth) && curr.depth < MAX_DEPTH) {
+                        if (neighbor.board.isGoal()) {
+                            ArrayList<Board.Move> result = new ArrayList<>();
+                            while (!current.equals(board)) {
+                                Board.Move lastMove = traversalGraph.get(current);
+                                result.add(lastMove);
+                                current.move(lastMove.opposite());
+                            }
+                            Collections.reverse(result);
+                            long endTime = System.nanoTime();
+                            long timeElapsed = endTime - startTime;
+                            return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
+                        }
                         open.push(neighborWithDepth);
                         traversalGraph.put(neighbor.board, neighbor.move);
                     }
