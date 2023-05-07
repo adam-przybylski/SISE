@@ -27,9 +27,9 @@ public class DFS {
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
     public static Statistics solve(Board board, String order) throws WrongMoveException {
         long startTime = System.nanoTime();
-        int maxDepth = 0;
-        int nodesVisited = 0;
-        int nodesProcessed = 0;
+        int maxDepth = 1;
+        int nodesVisited = 1;
+        int nodesProcessed = 1;
         BoardWithDepth boardWithDepth = new BoardWithDepth(board, 0);
         open.add(boardWithDepth);
         while (!open.isEmpty()) {
@@ -39,25 +39,16 @@ public class DFS {
             if(curr.depth > maxDepth) {
                 maxDepth = curr.depth;
             }
-            if (current.isGoal()) {
-                ArrayList<Board.Move> result = new ArrayList<>();
-                while (!current.equals(board)) {
-                    Board.Move lastMove = traversalGraph.get(current);
-                    result.add(lastMove);
-                    current.move(lastMove.opposite());
-                }
-                Collections.reverse(result);
-                long endTime = System.nanoTime();
-                long timeElapsed = endTime - startTime;
-                return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
-            }
             if (curr.depth < MAX_DEPTH && !closed.contains(curr)) {
                 closed.add(curr);
                 for (MoveTuple neighbor : current.getNeighbors()) {
                     BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                     nodesProcessed++;
                     if (!closed.contains(neighborWithDepth) && curr.depth < MAX_DEPTH) {
+                        open.push(neighborWithDepth);
+                        traversalGraph.put(neighbor.board, neighbor.move);
                         if (neighbor.board.isGoal()) {
+                            current = neighbor.board;
                             ArrayList<Board.Move> result = new ArrayList<>();
                             while (!current.equals(board)) {
                                 Board.Move lastMove = traversalGraph.get(current);
@@ -69,8 +60,6 @@ public class DFS {
                             long timeElapsed = endTime - startTime;
                             return new Statistics(result.size(), nodesVisited, nodesProcessed, maxDepth, timeElapsed, result);
                         }
-                        open.push(neighborWithDepth);
-                        traversalGraph.put(neighbor.board, neighbor.move);
                     }
                 }
             }
