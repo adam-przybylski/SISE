@@ -42,7 +42,7 @@ public class BFS {
             closed.add(current);
             for (MoveTuple neighbor : current.board.getNeighbors()) {
                 nodesProcessed++;
-                BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, depth + 1);
+                BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, current.depth + 1);
                 if (!closed.contains(neighborWithDepth) && !open.contains(neighborWithDepth)) {
                     open.add(neighborWithDepth);
                     // May be to change how we got here, I think it's ok nvm
