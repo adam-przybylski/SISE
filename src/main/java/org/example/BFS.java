@@ -2,10 +2,32 @@ package org.example;
 
 import java.util.*;
 
+class BoardWithDepthNoHash {
+    public BoardWithDepthNoHash(Board board, int depth) {
+        this.board = board;
+        this.depth = depth;
+    }
+    public Board board;
+    public int depth;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BoardWithDepth) {
+            BoardWithDepth other = (BoardWithDepth) obj;
+            return board.equals(other.board);
+        }
+        return false;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(board, depth);
+//    }
+}
+
 public class BFS {
     public static int MAX_DEPTH = 10000;
-    private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
-    private static final HashSet<BoardWithDepth> closed = new HashSet<>();
+    private static final ArrayDeque<BoardWithDepthNoHash> open = new ArrayDeque<>();
+    private static final HashSet<BoardWithDepthNoHash> closed = new HashSet<>();
 
     //  In value, we keep move that led to this board
     private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
@@ -17,11 +39,11 @@ public class BFS {
         int maxDepth = 0;
         int nodesVisited = 0;
         int nodesProcessed = 0;
-        BoardWithDepth boardWithDepth = new BoardWithDepth(board, 0);
+        BoardWithDepthNoHash boardWithDepth = new BoardWithDepthNoHash(board, 0);
         open.add(boardWithDepth);
         //traversalGraph.put(board, null);
         while (!open.isEmpty()) {
-            BoardWithDepth current = open.poll();
+            BoardWithDepthNoHash current = open.poll();
             nodesVisited++;
             if (current.depth > maxDepth) {
                 maxDepth = current.depth;
@@ -42,7 +64,7 @@ public class BFS {
             closed.add(current);
             for (MoveTuple neighbor : current.board.getNeighbors()) {
                 nodesProcessed++;
-                BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, current.depth + 1);
+                BoardWithDepthNoHash neighborWithDepth = new BoardWithDepthNoHash(neighbor.board, current.depth + 1);
                 if (!closed.contains(neighborWithDepth) && !open.contains(neighborWithDepth)) {
                     open.add(neighborWithDepth);
                     // May be to change how we got here, I think it's ok nvm
