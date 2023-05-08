@@ -48,10 +48,10 @@ public interface Board {
             Move[] orderMoves = new Move[order.length()];
             for (int i = 0; i < order.length(); i++) {
                 switch (order.charAt(i)) {
-                    case 'U' -> orderMoves[order.length() - i] = DOWN;
-                    case 'D' -> orderMoves[order.length() - i] = UP;
-                    case 'L' -> orderMoves[order.length() - i] = RIGHT;
-                    case 'R' -> orderMoves[order.length() - i] = LEFT;
+                    case 'U' -> orderMoves[i] = DOWN;
+                    case 'D' -> orderMoves[i] = UP;
+                    case 'L' -> orderMoves[i] = RIGHT;
+                    case 'R' -> orderMoves[i] = LEFT;
                 }
             }
             return orderMoves;
