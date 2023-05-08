@@ -14,8 +14,8 @@ public class Statistics {
     public Statistics(int resultLength, int nodesVisited, int nodesProcessed, int maxDepth, long timeElapsed, ArrayList<Board.Move> moves) {
 
         this.resultLength = resultLength;
-        this.nodesVisited = nodesVisited;
-        this.nodesProcessed = nodesProcessed;
+        this.nodesVisited = nodesProcessed;
+        this.nodesProcessed = nodesVisited;
         this.maxDepth = maxDepth;
         this.timeElapsed = timeElapsed;
         this.moves = moves;
