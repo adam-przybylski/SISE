@@ -9,19 +9,17 @@ class BoardWithDepthNoHash {
     }
     public Board board;
     public int depth;
+    public int hashCode() {
+        return board.hashCode();
+    }
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof BoardWithDepth) {
-            BoardWithDepth other = (BoardWithDepth) obj;
+        if (obj instanceof BoardWithDepthNoHash) {
+            BoardWithDepthNoHash other = (BoardWithDepthNoHash) obj;
             return board.equals(other.board);
         }
         return false;
     }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(board, depth);
-//    }
 }
 
 public class BFS {
