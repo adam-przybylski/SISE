@@ -50,6 +50,25 @@ public class SquareCentricBoard implements Board, Cloneable {
     }
 
     @Override
+    public List<MoveTuple> getNeighborsReversed() {
+        List<MoveTuple> result = new ArrayList<>();
+
+        for(Move move : Move.getReversed(order)) {
+            try {
+                SquareCentricBoard newBoard = (SquareCentricBoard)this.clone();
+                newBoard.move(move);
+                result.add(new MoveTuple(newBoard, move));
+            } catch (WrongMoveException e) {
+                // do nothing
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return result;
+    }
+
+
+    @Override
     public boolean isGoal() {
         if (board[rows - 1][columns - 1] != 0) {
             return false;

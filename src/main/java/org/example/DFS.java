@@ -41,7 +41,7 @@ public class DFS {
             }
             if (curr.depth < MAX_DEPTH && !closed.contains(curr)) {
                 closed.add(curr);
-                for (MoveTuple neighbor : current.getNeighbors()) {
+                for (MoveTuple neighbor : current.getNeighborsReversed()) {
                     BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                     nodesProcessed++;
                     if (!closed.contains(neighborWithDepth) && curr.depth < MAX_DEPTH) {
