@@ -8,9 +8,6 @@ class BoardWithDepth {
     }
     public Board board;
     public int depth;
-    public int hashCode() {
-        return board.hashCode();
-    }
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof BoardWithDepth) {
@@ -19,12 +16,17 @@ class BoardWithDepth {
         }
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, depth);
+    }
 }
 public class DFS {
     public static int MAX_DEPTH = 20;
     private static final ArrayDeque<BoardWithDepth> open = new ArrayDeque<>();
     private static final HashSet<BoardWithDepth> closed = new HashSet<>();
-    private static final HashMap<Board, Board.Move> traversalGraph = new HashMap<>();
+    private static final HashMap<BoardWithDepth, Board.Move> traversalGraph = new HashMap<>();
     public static Statistics solve(Board board, String order) throws WrongMoveException {
         long startTime = System.nanoTime();
         int maxDepth = 1;
@@ -35,25 +37,25 @@ public class DFS {
         while (!open.isEmpty()) {
             BoardWithDepth curr =open.poll();
             nodesVisited++;
-            Board current = curr.board;
             if(curr.depth > maxDepth) {
                 maxDepth = curr.depth;
             }
             if (curr.depth < MAX_DEPTH && !closed.contains(curr)) {
                 closed.add(curr);
-                for (MoveTuple neighbor : current.getNeighborsReversed()) {
+                for (MoveTuple neighbor : curr.board.getNeighborsReversed()) {
                     BoardWithDepth neighborWithDepth = new BoardWithDepth(neighbor.board, curr.depth + 1);
                     nodesProcessed++;
                     if (!closed.contains(neighborWithDepth) && curr.depth < MAX_DEPTH) {
                         open.push(neighborWithDepth);
-                        traversalGraph.put(neighbor.board, neighbor.move);
+                        traversalGraph.put(neighborWithDepth, neighbor.move);
                         if (neighbor.board.isGoal()) {
-                            current = neighbor.board;
+                            curr = new BoardWithDepth(neighborWithDepth.board, neighborWithDepth.depth);
                             ArrayList<Board.Move> result = new ArrayList<>();
-                            while (!current.equals(board)) {
-                                Board.Move lastMove = traversalGraph.get(current);
+                            while (!curr.board.equals(board)) {
+                                Board.Move lastMove = traversalGraph.get(curr);
                                 result.add(lastMove);
-                                current.move(lastMove.opposite());
+                                curr.board.move(lastMove.opposite());
+                                curr.depth--;
                             }
                             Collections.reverse(result);
                             long endTime = System.nanoTime();
